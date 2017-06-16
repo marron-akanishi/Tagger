@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block menu %}
+<div class="container">
+  <h4>現在の画像枚数</h4>
+  <ul>
+    <li>全枚数:{{all}}枚</li>
+    {% for count in list %}
+    <li>{{loop.index0 | GetTagName()}}:{{count}}枚</li>
+    {% endfor %}
+  </ul>
+  <h4>メニュー</h4>
+  <table class="table">
+    <tr>
+      <td>タグ付け</td>
+      <td align="right">
+        <input type="button" class="btn btn-primary" onclick="location.href = '/view?id=0'" value="最初から">
+        <input type="button" class="btn btn-primary" onclick="location.href = '/view?id=-1'" value="続きから">
+      </td>
+    </tr>
+  </table>
+</div>
+{% endblock menu %}

@@ -1,0 +1,4 @@
+images/
+done/
+*.json
+__pycache__/

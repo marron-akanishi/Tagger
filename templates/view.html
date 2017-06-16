@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% block menu %}
+<script src="/static/js/view.js"></script>
+<div class="container">
+  <input type="button" class="btn btn-primary" onclick="location.href='/'" value="メニューに戻る">
+  {% if id > 0 %}
+    <button id="prev" class="btn btn-default" onclick="location.href='/view?id={{id-1}}'">＜</button>
+  {% else %}
+    <button class="btn btn-default" disabled>＜</button>
+  {% endif %}
+  {% if id < max %}
+    <button id="next" class="btn btn-default" onclick="location.href='/view?id={{id+1}}'">＞</button>
+  {% else %}
+    <button class="btn btn-default" disabled>＞</button>
+  {% endif %}
+  <button id="helpbtn" type="button" class="btn btn-info" data-toggle="collapse" data-target="#help">基準を開く</button>
+  <div id="help" class="collapse">
+    <div class="well">
+        <h3>タグ付け基準</h3>
+        <p>
+          タグ付けは以下の基準を参考に行ってください。<br>
+          判定が難しい場合はNoneではなく、Otherに回すようにしてください。<br>
+          <dl>
+            <dt>None</dt>
+              <dd>
+                初期状態です。これは選択しないでください。
+              </dd>
+            <dt>Photo</dt>
+              <dd>
+                写真<br>
+                少しでも写真要素があるものは全てこれになります。
+              </dd>
+            <dt>NormalIllust</dt>
+              <dd>
+                全年齢対象イラスト<br>
+                基本的にこれが多くなると思います。<br>
+                Adult以外の区別はこれの派生みたいなものです。
+              </dd>
+            <dt>NormalComic</dt>
+              <dd>
+                全年齢対象漫画<br>
+                2コマ以上の漫画はこちらになります。カラー・モノクロは問いません。<br>
+                1コマの場合はNormalIllustになります。
+              </dd>
+            <dt>Adult</dt>
+              <dd>
+                18禁イラスト全般<br>
+                イラスト・漫画問わずに18禁と思われるものは全てこれになります。<br>
+                判定は基本的は見えているかどうか(何がとは言わない)です。
+              </dd>
+            <dt>ScreenShot</dt>
+              <dd>
+                スクリーンショット<br>
+                イラストの中でもスクリーンショットだと思われるものはこれになります。<br>
+                メッセージウィンドウが表示されていたり、セリフ等の文字が多いものはこれです。<br>
+                ただし、HシーンなどはAdult、ただのイベントCGなどはNormalIllustになります。
+              </dd>
+            <dt>Anime</dt>
+              <dd>
+                アニメのスクショ<br>
+                アニメの1シーン等はこれになります。<br>
+                一部分の切り抜きでもここに入れてください。
+              </dd>
+            <dt>Other</dt>
+              <dd>
+                その他<br>
+                上のどれにも判定できない、よく分からない画像はこれを選択しておいてください。<br>
+                Noneにしたまま、次の画像に入れるのはやめてください。
+              </dd>
+          </dl>
+          判定が非常に難しいものが多数あります。<br>
+          特に全年齢対象と18禁、NormalIllustとScreenShotの判定が難しいですが、頑張ってください。<br>
+          18禁判定で困ったときは、他人に気軽に見せることが出来るかどうかで判定しましょう。
+        </p>
+    </div>
+  </div>
+</div>
+{% endblock menu %}
+{% block main %}
+<div class="container">
+  <script src="/static/js/tag.js"></script>
+  <div>
+    <h4 id="tagname">{{tag}}</h4>
+    {% for tag in taglist %}
+    <input type="button" class="btn btn-default" onclick="setTag({{loop.index0-1}},{{id}})" value="{{loop.index0 | GetTagName()}}">
+    {% endfor %}
+  </div>
+  <br><img id="image" src={{image}} class="img-responsive img-thumbnail" />
+</div>
+{% endblock main %}
