@@ -8,10 +8,10 @@ import datetime
 
 # 自身の名称を app という名前でインスタンス化する
 app = flask.Flask(__name__)
-tagfile = open("./taglist.json")
+tagfile = open("./taglist.json",encoding="utf-8")
 tagjson = json.load(tagfile)
 tagfile.close()
-listfile = open("./list.json")
+listfile = open("./list.json", encoding="utf-8")
 listjson = json.load(listfile)
 listfile.close()
 
@@ -43,7 +43,7 @@ def Index():
 @app.route('/view', methods=['GET'])
 def TagView():
     listid, imagefile = GetListData(flask.request.args.get('id'))
-    return flask.render_template('view.html', id=listid, max=len(listjson)-1, image=imagefile, taglist=tagjson, tag=tagjson[str(listjson[imagefile])])
+    return flask.render_template('view.html', id=listid, max=len(listjson)-1, image=imagefile, taglen=len(tagjson), tag=tagjson[str(listjson[imagefile])])
 
 @app.route('/settag', methods=['POST'])
 def SetTag():

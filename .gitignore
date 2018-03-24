@@ -1,4 +1,7 @@
-images/
+*.jpg
+*.png
 done/
 *.json
 __pycache__/
+files/
+!taglist.json

@@ -4,16 +4,16 @@
 <div class="container">
   <input type="button" class="btn btn-primary" onclick="location.href='/'" value="メニューに戻る">
   {% if id > 0 %}
-    <button id="prev" class="btn btn-default" onclick="location.href='/view?id={{id-1}}'">＜</button>
+    <button id="prev" class="col-xs-offset-1 btn btn-default" onclick="location.href='/view?id={{id-1}}'">＜</button>
   {% else %}
-    <button class="btn btn-default" disabled>＜</button>
+    <button class="col-xs-offset-1 btn btn-default" disabled>＜</button>
   {% endif %}
   {% if id < max %}
     <button id="next" class="btn btn-default" onclick="location.href='/view?id={{id+1}}'">＞</button>
   {% else %}
     <button class="btn btn-default" disabled>＞</button>
   {% endif %}
-  <button id="helpbtn" type="button" class="btn btn-info" data-toggle="collapse" data-target="#help">基準を開く</button>
+  <button id="helpbtn" type="button" class="col-xs-offset-1 btn btn-info" data-toggle="collapse" data-target="#help" disabled>基準を開く</button>
   <div id="help" class="collapse">
     <div class="well">
         <h3>タグ付け基準</h3>
@@ -46,14 +46,14 @@
               <dd>
                 18禁イラスト全般<br>
                 イラスト・漫画問わずに18禁と思われるものは全てこれになります。<br>
-                判定は基本的は見えているかどうか(何がとは言わない)です。
+                エロいと思ったものはすべてこれに入れてください。(判定は厳し目に)
               </dd>
             <dt>ScreenShot</dt>
               <dd>
                 スクリーンショット<br>
                 イラストの中でもスクリーンショットだと思われるものはこれになります。<br>
                 メッセージウィンドウが表示されていたり、セリフ等の文字が多いものはこれです。<br>
-                ただし、HシーンなどはAdult、ただのイベントCGなどはNormalIllustになります。
+                ただし、HシーンはAdult、テキストウィンドウ無しのイベントCGなどはNormalIllustになります。
               </dd>
             <dt>Anime</dt>
               <dd>
@@ -80,11 +80,15 @@
 <div class="container">
   <script src="/static/js/tag.js"></script>
   <div>
-    <h4 id="tagname">{{tag}}</h4>
-    {% for tag in taglist %}
-    <input type="button" class="btn btn-default" onclick="setTag({{loop.index0-1}},{{id}})" value="{{loop.index0 | GetTagName()}}">
+    <h4 id="tagname">{{image}}: {{tag}}</h4>
+    <img id="image" src={{image}} class="img-responsive img-thumbnail" width="128px" />
+    <br><br>
+    {% for _ in range(taglen) %}
+    <input type="button" class="btn btn-default btn-lg" onclick="setTag({{loop.index0-1}},{{id}})" value="{{loop.index0 | GetTagName()}}">
+    {% if loop.index0 == taglen//2 %}
+    <br>
+    {% endif %}
     {% endfor %}
   </div>
-  <br><img id="image" src={{image}} class="img-responsive img-thumbnail" />
 </div>
 {% endblock main %}
